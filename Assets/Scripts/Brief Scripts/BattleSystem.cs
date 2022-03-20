@@ -34,6 +34,7 @@ public class BattleSystem : MonoBehaviour
         // to ensure that there is not always a draw, by default it just returns 0. 
         // If you right click this function and find all references you can see where it is called.
         // Let's also throw in a little randomness in here, so it's not a garunteed win
+
         Debug.LogWarning("ReturnBattlePoints has been called we probably want to create some battle points based on our stats");
         return 0;
     }

@@ -29,6 +29,11 @@ public class LevellingSystem : MonoBehaviour
     public void AddXP(int xpGained)
     {
         // we probably want to do something with the xpGained.
+        currentXp += xpGained;
+        if (currentXp > currentXPThreshold)
+        {
+            LevelUp();
+        }
 
         
 
@@ -48,9 +53,12 @@ public class LevellingSystem : MonoBehaviour
         // TODO we probs want to increase our level....
         // TODO As well as probably want to increase our threshold for when we should level up...based on our current new level
 
+        curretLevel = curretLevel + 1;
+        currentXPThreshold = (currentXPThreshold * curretLevel);
+
         if(briefManager != null) // Do not delete.
         {
-            briefManager.statsSystem.DistributePhysicalStatsOnLevelUp(10);
+            briefManager.statsSystem.DistributePhysicalStatsOnLevelUp(10 * curretLevel);
             briefManager.ShowLevelUpEffects();
         }
     }

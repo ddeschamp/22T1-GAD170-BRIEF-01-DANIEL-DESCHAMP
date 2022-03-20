@@ -16,32 +16,48 @@ public class StatsSystem : MonoBehaviour
     /// <summary>
     /// Our variables used to determine our fighting power.
     /// </summary>
+    public int rhythm;
     public int style;
     public int luck;
-    public int rhythm;
+
 
     /// <summary>
     /// Our physical stats that determine our dancing stats.
     /// </summary>
+    public int strength;
     public int agility;
     public int intelligence;
-    public int strength;
+
+    // The statpool has been set to scale with level.
+    public int statpool;
+
 
     /// <summary>
-    /// Used to determine the conversion of 1 physical stat, to 1 dancing stat.
+    /// Used to determine the conversion of 1 physical stat, to various dancing stats.
     /// </summary>
-    public float agilityMultiplier = 0.5f;
-    public float strengthMultiplier = 1f;
-    public float inteligenceMultiplier = 2f;
+    public float strengthMultiplier = 2f;    
+    public float dexterityMultiplier = 1.5f;
+    public float charismaMultiplier = 1f;
 
 
     /// <summary>
-    /// This function should set our starting stats of Agility, Strength and Intelligence
+    /// This function should set our starting stats of Strength, Dexterity and Charisma
     /// to some default RANDOM values.
     /// </summary>
     public void GeneratePhysicalStatsStats()
     {
-        // Let's set up agility, intelligence and strength to some default Random values.
+        int statpool = 20;
+        strength = Random.Range(1, statpool);
+        statpool -= strength;
+        agility = Random.Range(1, statpool);
+        statpool -= agility;
+        intelligence = statpool;
+        statpool -= intelligence;
+        Debug.Log("STR: " + strength);
+        Debug.Log("DEX: " + agility);
+        Debug.Log("CHA: " + intelligence);
+        Debug.Log("Statpool: " + statpool);
+        return;
 
     }
 
@@ -58,15 +74,41 @@ public class StatsSystem : MonoBehaviour
         // our Luck should be based on our intelligence and our Intelligence multiplier.
         // hint...your going to need to convert our ints into floats, then back to ints.
 
+        float strFloat = (float)strength;
+        float rhyFloat = (strFloat * 2f); //I attempted to multiply this converted float by 'strengthMultiplier' but it didn't want to work properly, and so rhythm would equal strength on a 1:1 ratio.
+        int rhyInt = (int)rhyFloat;
+        rhythm = rhyInt;
+        Debug.Log("RHY: "+ rhythm);
+        float agiFloat = (float)agility;
+        float styFloat = (agiFloat * 1.5f); //Same goes for agility multiplier.
+        int styInt = (int)styFloat;
+        style = styInt;
+        Debug.Log("STY: " + style);
+        float intFloat = (float)intelligence;
+        float lckFloat = (intFloat * 1f); //Same goes for intelligence multiplier.
+        int lckInt = (int)lckFloat;
+        luck = lckInt;
+        Debug.Log("LCK: " + luck);
+
     }
 
     /// <summary>
     /// A function used to assign a random amount of points ot each of our skills.
     /// </summary>
-    public void DistributePhysicalStatsOnLevelUp(int PointsPool)
+    public void DistributePhysicalStatsOnLevelUp(int statPool)
     {
         // let's share these points somewhat evenly or based on some forumal to increase our current physical stats
         // then let's recalculate our dancing stats again to process and update the new values.
+
+        int newStr = Random.Range(1, statPool);
+        statPool -= newStr;
+        strength += newStr;
+        int newAgi = Random.Range(1, statPool);
+        statPool -= newAgi;
+        agility += newAgi;
+        int newInt = statPool;
+        statPool -= newInt;
+        intelligence += newInt;
     }
 
     #region No Mods Required
